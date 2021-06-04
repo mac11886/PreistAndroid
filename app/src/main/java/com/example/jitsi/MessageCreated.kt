@@ -2,7 +2,7 @@ package com.example.jitsi
 
 import com.google.gson.Gson
 
-class MessageCreated(val message: String) {
+class MessageCreated(val from: String,val status:String,val room:String,val to:String) {
 
     companion object {
         fun parseFrom(value: Array<Any>): MessageCreated? {

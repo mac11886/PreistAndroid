@@ -8,11 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.pusher.client.Pusher
+import com.pusher.client.PusherOptions
+import com.pusher.client.connection.ConnectionEventListener
+import com.pusher.client.connection.ConnectionState
+import com.pusher.client.connection.ConnectionStateChange
 import org.jitsi.meet.sdk.*
 import timber.log.Timber
 import java.net.MalformedURLException
@@ -20,7 +26,7 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileAcitivity : AppCompatActivity() {
+class ProfileAcitivity : BaseActivity() {
 
     lateinit var dateText: TextView
     lateinit var timeText: TextView
@@ -28,18 +34,22 @@ class ProfileAcitivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_acitivity)
+
+        listenForEvents()
+
         init()
         dateAndTime()
+//        onButtonClick()
         callBtn.setOnClickListener {
             onButtonClick()
         }
         val android_id = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
-        Toast.makeText(this, "Id:" + android_id, Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "Id:" + android_id, Toast.LENGTH_LONG).show()
         // Initialize default options for Jitsi Meet conferences.
         val serverURL: URL
         serverURL = try {
             // When using JaaS, replace "https://meet.jit.si" with the proper serverURL
-            URL("https://zoom.kisra.co.th")
+            URL("https://priest-core.kisra.co.th/calling/")
         } catch (e: MalformedURLException) {
             e.printStackTrace()
             throw RuntimeException("Invalid server URL!")
@@ -114,7 +124,11 @@ class ProfileAcitivity : AppCompatActivity() {
 
 //        val editText = findViewById<EditText>(R.id.conferenceName)
         //should set keyId this
-        val text = "mac"
+//        if ()
+        var device = intent.getStringExtra("device").toString()
+        var ward = "/ward-1"
+        var text = "$device" +"$ward"
+        Log.i("link", text)
         if (text.length > 0) {
             // Build options object for joining the conference. The SDK will merge the default
             // one we set earlier and this one when joining.
@@ -123,10 +137,15 @@ class ProfileAcitivity : AppCompatActivity() {
                 // Settings for audio and video
                 //.setAudioMuted(true)
                 //.setVideoMuted(true)
+                .setFeatureFlag("kick-out.enabled", false).setFeatureFlag("chat.enabled", false).setFeatureFlag("invite.enabled",false)
+                .setFeatureFlag("raise-hand.enabled",false).setFeatureFlag("video-shared.enabled",false).setFeatureFlag("pip.enabled",false)
+                .setFeatureFlag("overflow-menu.enabled",false).setFeatureFlag("toolbox.more",false).setFeatureFlag("security-options.enabled",false)
+                .setFeatureFlag("title-view.enabled",false).setFeatureFlag("close-captions.enabled",false).setFeatureFlag("filmstrip.enabled",false)
                 .build()
             // Launch the new activity with the given options. The launch() method takes care
             // of creating the required Intent and passing the options.
             //lauch room
+
             JitsiMeetActivity.launch(this, options)
         }
     }

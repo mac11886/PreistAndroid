@@ -50,4 +50,5 @@ dependencies {
     //laravel Echo
     implementation 'com.github.MrBin99:LaravelEchoAndroid:1.03'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.pusher:pusher-java-client:2.2.6'
 }

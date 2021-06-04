@@ -2,19 +2,12 @@ package com.example.jitsi
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import net.mrbin99.laravelechoandroid.Echo
+import android.widget.Toast
 
-import net.mrbin99.laravelechoandroid.EchoCallback
-import net.mrbin99.laravelechoandroid.EchoOptions
-import org.jitsi.meet.sdk.*
-import java.io.*
+import androidx.lifecycle.Observer
 
 class MainActivity : BaseActivity() {
     lateinit var button: Button
@@ -27,8 +20,15 @@ class MainActivity : BaseActivity() {
         connectToSocket()
         initLiveDataListener()
         button.setOnClickListener {
+
+            EVENT_MESSAGE += editText.text
+            Toast.makeText(this, EVENT_MESSAGE,Toast.LENGTH_LONG).show()
+//            listenForEvents()
+//            EVENT_MESSAGE = ".calling.device."
             buttonToProfile()
+
         }
+
     }
 
     private fun initLiveDataListener() {
@@ -45,14 +45,16 @@ class MainActivity : BaseActivity() {
     private fun displayEventData(event: Any) {
         if (event is MessageCreated) {
             setText.apply {
-                val newText = event.message + "\n" + this.text.toString()
+                val newText = event.room + "\n" + this.text.toString()
                 text = newText
             }
         }
     }
 
     fun buttonToProfile() {
-        Intent(this, ProfileAcitivity::class.java).also { intent -> startActivity(intent) }
+        Intent(this, ProfileAcitivity::class.java).also { intent ->
+            intent.putExtra("device", EVENT_MESSAGE)
+            startActivity(intent) }
     }
 
     fun init() {
