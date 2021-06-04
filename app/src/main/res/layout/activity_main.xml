@@ -6,36 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="342dp"
-
-        android:text="Join"
+        android:orientation="vertical"
+        android:weightSum="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/conferenceName"
-        android:layout_marginLeft="161dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.428">
 
-    <EditText
-        android:id="@+id/conferenceName"
-        android:layout_width="285dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Please insert your key"
+            android:textColor="@color/black" />
+
+        <EditText
+            android:id="@+id/insertKeyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Insert Keyid"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="113dp"
+            tools:layout_editor_absoluteY="312dp" />
+
+        <Button
+            android:id="@+id/insertKeyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Confirm" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/setText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="276dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginBottom="14dp"
-        android:contentDescription="Enter conference name..."
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="176dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
